@@ -1,0 +1,16 @@
+{% extends "base.html"%}
+{% block title %}연락하기{% endblock %}
+
+{% block content %}
+    <h1>연락하기</h1>
+    {% if success %}
+        <p style="color: green;">메세지가 성공적으로 전송 되었습니다.</p>
+    {% endif %}
+    <form method="post" action="/contact">
+        <p><input type="text" name="name" placeholder="이름" required></p>
+        <p><input type="email" name="email" placeholder="이메일" required></p>
+        <p><textarea name="message" placeholder="메세지 내용" rows="5" required></p>
+        <p><button type="submit">보내기</p>
+    </form>
+    <p><a href = '/'>홈으로</a></p>
+{% endblock %}
