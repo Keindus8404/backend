@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- form 태그 - 회원가입 -->
+<form action="/register">
+    <label for="name"> 이름 </label>
+    <input type="text" id="name"><br>
+    
+    <p>
+    <label for="email"> 이메일 </label>
+    <input type="text" id="email"><br>
+    
+    이메일<input type="text" id="email"><br>
+    <!-- 그냥 써도 되지만 이렇게 하면 라벨 클래스를 못씌워서 일부러 이렇게 만듦 -->
+    </p>
+
+    <p>
+    <label for="gender"> 성별 </label>
+    <input type="radio" name="gender" value="male">남
+    <input type="radio" name="gender" value="female">여
+    <!-- name을 같게 해주면 같은그룹으로 구분함 -->
+    </p>
+
+    <p>
+    <label for="interest"> 취미 </label>
+    <input type="checkbox" name="interest" value="fishing">낚시
+    <input type="checkbox" name="interest" value="health">헬스
+    <!-- name을 같게 해주면 같은그룹으로 구분함 -->
+    </p>
+
+    <input type="submit" value="가입하기">
+</form>
+</body>
+</html>
