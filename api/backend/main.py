@@ -78,3 +78,52 @@ def create_product(product:ProductCreate):
     db.refresh(product)
     db.close()
     return {"success":True, "message":"상품 등록 완료", "product_id":product.id}
+
+# 장바구니 담기
+@app.post('/api/products')
+def add_to_cart(item:CartItem):
+    db=SessionLocal()
+    cart = Cart(user_id=item.user_id, product_id = item.product_id, quantity = item.quantity)
+    db.add(cart)
+    db.commit()
+    db.refresh(cart)
+    db.close()
+    return {"success":True, "message":"장바구니에 담겼습니다.", "cart_id":cart.id}
+
+# 장바구니 조회  /api/cart?user_id=1   ?키=벨류&키=벨류  쿼리파라메터
+from fastapi import Query
+@app.get('/api/cart')
+def get_cart(user_id: int = Query(...), db:Session=Depends(get_db)):
+    items = db.query(Cart).filter(Cart.user_id == user_id).all()
+    return [     
+        {
+            'product_id':item.product_id ,
+            'quantity':item.quantity
+        }
+     for item in items
+    ]
+
+
+# 주문 요청(장바구니 상품 주문)
+@app.post('/api/order')
+def place_order(order : OrderRequest, db:Session = Depends(get_db)):
+    cart_items = db.query(Cart).filter(Cart.user_id == order.user_id).all()
+    if not cart_items:
+        raise HTTPException(status_code=400, detail="장바구니가 비어있습니다.")
+    for item in cart_items:
+        new_order = Order(
+            user_id = item.user_id,
+            product_id = item.product_id,
+            quantity = item.quantity
+        )
+        db.add(new_order)
+        db.delete(item)
+        db.refresh(new_order)
+    db.commit()
+    return {"success":True, "message" : "주문이 완료되었습니다."}
+
+# 주문 목록 조회
+@app.get('/api/order', response_model=List[OrderOut])
+def get_orders(user_id:int = Query(...), db:Session = Depends(get_db)):
+    orders = db.query(Order).filter(Order.user_id == user_id).all()
+    return orders
