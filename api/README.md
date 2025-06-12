@@ -12,14 +12,19 @@
 
 
 # FAST API 설치
-'''
+```
 pip install fastapi uvicorn sqlalchemy
-'''
+```
 
 # 통신규칙
-'''
+```
 통신           json 포멧으로 사용함
 인증           쿠키, 세션 대신 단순 로그인 응답으로 use_id 유지(js 변수에 저장)
 응답 메시지    {success:True, date: ...} 형식
 에러처리       {success:False, error: "에러메시지"} 형식
-'''
+```
+
+# Fast API로 구현한 api와 html을 연결하려면
+```
+main.py가 실행중인 폴더의 하위에 templates 폴더를 만들고 html 파일을 저장한다.
+```

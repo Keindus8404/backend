@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쇼핑몰 - 홈t</title>
+    <script>
+        async function loadProduct() {
+            const res = await fetch("/api/products")
+            const products = await res.json()
+            const list = document.getElementById('product-list');
+            list.innerHTML = '';
+
+            // for p in products
+
+            products.forEach(p=>{
+                const li = document.createElement('li')
+                li.textContent = `${p.name} - ${p.price}원`
+                list.appendChild(li)
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>쇼핑몰 메인</h1>
+    <nav>
+        <a href="/register.html">회원가입</a> | <a href="/login.html">로그인</a>
+    </nav>
+    <h2>상품 목록</h2>
+    <ul id="product-list">
+        <li></li>
+    </ul>
+</body>
+</html>
